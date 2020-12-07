@@ -24,7 +24,7 @@
 <!--  Animal Detail goes here  -->	
 
 <div class="row">
-	<div class="col-xs-6">
+	<div class="col-sm-4 col-xs-12">
 		<ul class="text-left">
 			<h5> Animal Info</h5>
 			<h6>(Select feeding schedule for ${animal.name })</h6>
@@ -51,16 +51,36 @@
 			<button role="submit" class="btn btn-primary">Save Schedule</button>
 		</ul>
 	</div>
-	<div class="col-xs-6">
+	<div class="col-sm-8 col-xs-12">
 	<ul class="text-left">
+		<div class="col-sm-6 col-xs-12">
 			<h5> Edit Feeding Schedule</h5>
-			<li><strong>Feeding time : </strong></br><input value="${animal.name }"/></li>
-			<li><strong>Recurrence : </strong></br><input value="${animal.name }"/></li>
-			<li><strong>Food : </strong><span></br><input value="${animal.name }"/></li>
-			<li><strong>Notes : </strong><span></br><input value="${animal.name }"/></li>
+			<form action="updateFeedingSchedule" method="POST">
+				<li><strong>Feeding time : </strong></br><input value="${animal.name }"/></li>
+				<li><strong>Recurrence : </strong></br><input value="${animal.name }"/></li>
+				<li><strong>Food : </strong><span></br><input value="${animal.name }"/></li>
+				<li><strong>Notes : </strong><span></br><input value="${animal.name }"/></li>
+				</br>
+				<button role="submit" class="btn btn-primary">Save Edited Schedule</button>
+			</form>
+		</div>
+			
+		<div class="col-sm-6 col-xs-12">
+			<h5> Add Feeding Schedule</h5>
+			<form action="addFeedingSchedule" method="POST">
+				<li><strong>Schedule Id : </strong></br><input name="schedule_id" value=""/></li>
+				<li><strong>Feeding time : </strong></br><input name="feeding_time" value=""/></li>
+				<li><strong>Recurrence : </strong></br><input name="recurrence" value=""/></li>
+				<li><strong>Food : </strong><span></br><input name="food" value=""/></li>
+				<li><strong>Notes : </strong><span></br><input name="notes" value=""/></li>
+				</br>
+				<button type="submit" class="btn btn-primary">Add a new Schedule</button>
+			</form>
+			
 			</br>
-			<button role="submit" class="btn btn-primary">Save Edited Schedule</button></br> </br>
-			<button class="btn btn-primary"><a href="/addSchedule">Add a new Schedule</a></button>
+			
+		</div>
+			
 		</ul>
 	
 	</div>
