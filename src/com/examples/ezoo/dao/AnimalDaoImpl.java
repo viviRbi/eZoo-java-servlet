@@ -32,6 +32,7 @@ public class AnimalDaoImpl implements AnimalDAO {
 				Animal a = new Animal();
 
 				a.setAnimalID(rs.getLong("animalid"));
+				a.setScheduleID(rs.getLong("schedule_id"));
 				a.setName(rs.getString("name"));
 
 				a.setTaxKingdom(rs.getString("taxkingdom"));
@@ -87,7 +88,7 @@ public class AnimalDaoImpl implements AnimalDAO {
 			if (rs.next()) {
 				a.setAnimalID(rs.getLong("animalid"));
 				a.setName(rs.getString("name"));
-
+				a.setScheduleID(rs.getLong("schedule_id"));
 				a.setTaxKingdom(rs.getString("taxkingdom"));
 				a.setTaxPhylum(rs.getString("taxphylum"));
 				a.setTaxClass(rs.getString("taxclass"));
@@ -100,7 +101,7 @@ public class AnimalDaoImpl implements AnimalDAO {
 				a.setWeight(rs.getDouble("weight"));
 
 				a.setType(rs.getString("type"));
-				a.setHealthStatus(rs.getString("healthstatus"));			
+				a.setHealthStatus(rs.getString("healthstatus"));	
 			}
 		
 		} catch (SQLException e) {
@@ -128,13 +129,14 @@ public class AnimalDaoImpl implements AnimalDAO {
 
 		try {
 			connection = DAOUtilities.getConnection();
-			String sql = "INSERT INTO ANIMALS VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO ANIMALS VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			// Setup PreparedStatement
 			stmt = connection.prepareStatement(sql);
 
 			// Add parameters from animal into PreparedStatement
 			stmt.setLong(1, animal.getAnimalID());
+			
 			stmt.setString(2, animal.getName());
 
 			stmt.setString(3, animal.getTaxKingdom());
@@ -150,6 +152,8 @@ public class AnimalDaoImpl implements AnimalDAO {
 
 			stmt.setString(12, animal.getType());
 			stmt.setString(13, animal.getHealthStatus());
+			
+			stmt.setLong(14, animal.getScheduleID());
 			
 			success = stmt.executeUpdate();
 		} catch (SQLException e) {

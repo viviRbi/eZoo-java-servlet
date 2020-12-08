@@ -3,6 +3,7 @@ package com.examples.ezoo.model;
 public class Animal{
 	
 	private long animalID = 0L;
+	private long schedule_id = 0L;
 	private String name = "";
 	
 	private String taxKingdom = "";
@@ -21,11 +22,12 @@ public class Animal{
 	
 	public Animal(){}
 
-	public Animal(long animalID, String name, String taxKingdom, String taxPhylum, String taxClass, String taxOrder,
+	public Animal(long animalID, long schedule_id, String name, String taxKingdom, String taxPhylum, String taxClass, String taxOrder,
 			String taxFamily, String taxGenus, String taxSpecies, double height, double weight, String type,
 			String healthStatus) {
 		super();
 		this.animalID = animalID;
+		this.schedule_id= schedule_id;
 		this.name = name;
 		this.taxKingdom = taxKingdom;
 		this.taxPhylum = taxPhylum;
@@ -46,6 +48,13 @@ public class Animal{
 
 	public void setAnimalID(long animalID) {
 		this.animalID = animalID;
+	}
+	
+	public long getScheduleID() {
+		return schedule_id;
+	}
+	public void setScheduleID(long schedule_id) {
+		this.schedule_id = schedule_id;
 	}
 
 	public String getName() {
@@ -146,7 +155,7 @@ public class Animal{
 
 	@Override
 	public String toString() {
-		return "Animal [animalID=" + animalID + ", name=" + name + ", taxKingdom=" + taxKingdom + ", taxPhylum="
+		return "Animal [animalID=" + animalID + ", schedule_id="+ schedule_id + ", name=" + name + ", taxKingdom=" + taxKingdom + ", taxPhylum="
 				+ taxPhylum + ", taxClass=" + taxClass + ", taxOrder=" + taxOrder + ", taxFamily=" + taxFamily
 				+ ", taxGenus=" + taxGenus + ", taxSpecies=" + taxSpecies + ", height=" + height + ", weight=" + weight
 				+ ", type=" + type + ", healthStatus=" + healthStatus + "]";

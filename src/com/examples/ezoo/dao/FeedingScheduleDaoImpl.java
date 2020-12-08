@@ -101,15 +101,47 @@ public class FeedingScheduleDaoImpl implements FeedingScheduleDAO{
 	}
 
 	@Override
-	public void saveUpdateFeedingSchedule(long id) {
+	public boolean saveUpdateFeedingSchedule(FeedingSchedule a) throws Exception{
 		// TODO Auto-generated method stub
-		
-	}
+		Connection connection = null;
+		PreparedStatement stmt = null;
+		int success = 0;
 
-	@Override
-	public void getFeedingScheduleByID(long id) {
-		// TODO Auto-generated method stub
-		
+		try {
+			connection = DAOUtilities.getConnection();
+			String sql = "UPDATE feeding_schedules VALUES SET feeding_time=?,recurrence=?,food=?,notes=? WHERE schedule_id=?";
+
+			// Setup PreparedStatement
+			stmt = connection.prepareStatement(sql);
+
+	
+			// Add parameters from animal into PreparedStatement
+			stmt.setString(1, a.getFeeding_time());
+			stmt.setString(2,a.getRecurrence());
+			stmt.setString(3,a.getFood());
+			stmt.setString(4,a.getNotes());
+			stmt.setLong(5, a.getSchedule_ID());
+
+			
+			success = stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				if (connection != null)
+					connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		if (success == 0) {
+			// then update didn't occur, throw an exception
+			throw new Exception("Insert schedule failed: " + a);
+			
+		} else return true;
 	}
 
 	@Override

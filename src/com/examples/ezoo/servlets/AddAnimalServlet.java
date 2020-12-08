@@ -2,6 +2,7 @@ package com.examples.ezoo.servlets;
 
 import java.io.IOException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.examples.ezoo.dao.AnimalDAO;
 import com.examples.ezoo.dao.DAOUtilities;
+import com.examples.ezoo.dao.FeedingScheduleDAO;
 import com.examples.ezoo.model.Animal;
+import com.examples.ezoo.model.FeedingSchedule;
 
 /**
  * Servlet implementation class AddAnimalServlet
@@ -24,7 +27,10 @@ public class AddAnimalServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("addAnimal.jsp").forward(request, response);
+		FeedingScheduleDAO s = DAOUtilities.getFeedingScheduleDao();
+		List<FeedingSchedule> schedules = s.getAllSchedules();
+		request.getSession().setAttribute("schedules", schedules);
+		request.getRequestDispatcher("addAnimal.jsp").forward(request, response);	
 	}
 	
 	@Override
@@ -32,6 +38,7 @@ public class AddAnimalServlet extends HttpServlet {
 		//Get Parameters
 		//We MUST convert to a Long since parameters are always Strings
 		long id = Long.parseLong(request.getParameter("id"));
+		long schedule_id = Long.parseLong(request.getParameter("schedule_id"));
 		
 		String name = request.getParameter("name");
 
@@ -52,6 +59,7 @@ public class AddAnimalServlet extends HttpServlet {
 		//Create an Animal object from the parameters
 		Animal animalToSave = new Animal(
 				id, 
+				schedule_id,
 				name, 
 				kingdom,
 				phylum,
@@ -67,6 +75,7 @@ public class AddAnimalServlet extends HttpServlet {
 		
 		//Call DAO method
 		AnimalDAO dao = DAOUtilities.getAnimalDao();
+		
 		try {
 			dao.saveAnimal(animalToSave);
 			request.getSession().setAttribute("message", "Animal successfully created");

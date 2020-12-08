@@ -24,7 +24,7 @@
 <!--  Animal Detail goes here  -->	
 
 <div class="row">
-	<div class="col-sm-4 col-xs-12">
+	<div class="col-sm-6 col-xs-12">
 		<ul class="text-left">
 			<h5> Animal Info</h5>
 			<h6>(Select feeding schedule for ${animal.name })</h6>
@@ -32,10 +32,24 @@
 			<li>
 				<strong>Feeding time : </strong>
 				</br>
-				<select>
-					<option>1</option>
-					<option>2</option>
-				</select>
+				<form action="assignScheduleToAnimal" method="POST" id="assignScheduleToAnimal" name="assignScheduleToAnimal">
+					<input type="hidden" name="animal_id" value="${animal.animalID}"/>
+					<select name="schedule_id" onchange="pasteThisSchedule(this)">
+						<c:forEach var="s" items="${schedules}"> 
+							<option value="${s.schedule_ID}" 
+							${animal.getScheduleID() == s.getSchedule_ID()?"selected=selected":""}
+							data-feeding_time= "${s.feeding_time}"
+							data-food= "${s.food}"
+							data-feeding_time= "${s.feeding_time}"
+							data-notes="${s.notes}"
+							data-recurrence = "${s.recurrence}"
+							>
+								Schedule ${s.getSchedule_ID()}: ${s.feeding_time} ${s.food} 
+							</option>
+						</c:forEach> 
+					</select>
+				</form>
+				
 			</li>
 			<li><strong>Phylum : </strong><span>${animal.taxPhylum}</span></li>
 			<li><strong>Class : </strong><span>${animal.taxClass}</span></li>
@@ -48,43 +62,36 @@
 			<li><strong>Type : </strong><span>${animal.type}</span></li>
 			<li><strong>Health Status : </strong><span>${animal.healthStatus}</span></li>
 			</br>
-			<button role="submit" class="btn btn-primary">Save Schedule</button>
+			<button role="submit" class="btn btn-primary" form="assignScheduleToAnimal">Save Schedule</button>
+			<button role="submit" class="btn btn-primary">
+				<a href="/eZoo/addAnimal">Add an Animal</a>
+			</button>
 		</ul>
 	</div>
-	<div class="col-sm-8 col-xs-12">
+	<div class="col-sm-6 col-xs-12">
 	<ul class="text-left">
-		<div class="col-sm-6 col-xs-12">
+		
 			<h5> Edit Feeding Schedule</h5>
-			<form action="updateFeedingSchedule" method="POST">
-				<li><strong>Feeding time : </strong></br><input value="${animal.name }"/></li>
-				<li><strong>Recurrence : </strong></br><input value="${animal.name }"/></li>
-				<li><strong>Food : </strong><span></br><input value="${animal.name }"/></li>
-				<li><strong>Notes : </strong><span></br><input value="${animal.name }"/></li>
-				</br>
-				<button role="submit" class="btn btn-primary">Save Edited Schedule</button>
-			</form>
-		</div>
-			
-		<div class="col-sm-6 col-xs-12">
-			<h5> Add Feeding Schedule</h5>
-			<form action="addFeedingSchedule" method="POST">
-				<li><strong>Schedule Id : </strong></br><input name="schedule_id" value=""/></li>
+			<form action="editFeedingSchedule" method="POST" id="updateFeedingSchedule">
+				<input type="hidden" name="schedule_id" value=""/>
 				<li><strong>Feeding time : </strong></br><input name="feeding_time" value=""/></li>
 				<li><strong>Recurrence : </strong></br><input name="recurrence" value=""/></li>
 				<li><strong>Food : </strong><span></br><input name="food" value=""/></li>
-				<li><strong>Notes : </strong><span></br><input name="notes" value=""/></li>
+				<li><strong>Notes : </strong><span></br><textarea name="notes" value=""></textarea></li>
 				</br>
-				<button type="submit" class="btn btn-primary">Add a new Schedule</button>
+				<button role="submit" class="btn btn-primary">Save Edited Schedule</button>
 			</form>
-			
 			</br>
-			
-		</div>
-			
+			<form action="deleteFeedingSchedule" method="POST">
+				<input type="hidden" name="schedule_id" value=""/>
+				<button role="submit" class="btn btn-primary">Delete this Schedule</button>
+			</form>
+	
 		</ul>
 	
 	</div>
 </div>	
-						
-</body>
-</html>
+</div>
+</header>
+<jsp:include page="footer.jsp" />		
+				

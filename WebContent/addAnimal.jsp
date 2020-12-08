@@ -84,6 +84,19 @@
 					</select>
 		    </div>
 		  </div>
+		   <div class="form-group">
+		    <label for="schedule" class="col-sm-4 control-label">Feeding time</label>
+		    <div class="col-sm-4">
+
+		      <select name="schedule_id" required="required" class="form-control">
+					<c:forEach var="s" items="${schedules}"> 
+						<option value="${s.schedule_ID}" ${animal.getScheduleID() == s.getSchedule_ID()?"selected=selected":""}>
+							Schedule ${s.getSchedule_ID()}: ${s.feeding_time} ${s.food} 
+						</option>
+					</c:forEach> 
+				</select>
+		    </div>
+		  </div>
 		  <div class="form-group">
 		    <label for="height" class="col-sm-4 control-label">Height (in)</label>
 		    <div class="col-sm-4">
